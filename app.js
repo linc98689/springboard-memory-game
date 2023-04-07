@@ -18,6 +18,7 @@ const bscore = document.querySelector("#best-score span");
 const replay = document.querySelector("#replay");
 const numCards = document.querySelector('#num-cards');
 const label = document.querySelector('#label');
+// const describe = document.querySelector("#describe");
 
 // Helper functions
 
