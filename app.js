@@ -144,6 +144,7 @@ function handleCardClick(event) {
 
           // check if game is over
           if(arrInactive.length === arrStatus.length){
+            flipUp(target);
             //save score
             let bestScore = localStorage.getItem("bestScore");
             if (bestScore === null){
@@ -157,19 +158,22 @@ function handleCardClick(event) {
             else{
               bscore.innerText = bestScore;
             }
-            bscore.parentElement.classList.remove('hide');
-            const cards = document.querySelectorAll("#game div")
-            for(let card of cards){
-              card.remove();
-            }
-            numClick = 0;
-            numCards.classList.remove('hide');
-            label.classList.remove('hide');
-            replay.classList.remove('hide');
-            arrInactive.splice(0, arrInactive.length);
-            arrStatus.splice(0, arrStatus.length);
-            shuffledColors = generateGameColors(numUniqueCards);
-            createDivsForColors(shuffledColors);
+            
+            setTimeout(function(){
+              bscore.parentElement.classList.remove('hide');
+              const cards = document.querySelectorAll("#game div")
+              for(let card of cards){
+                card.remove();
+              }
+              numClick = 0;
+              numCards.classList.remove('hide');
+              label.classList.remove('hide');
+              replay.classList.remove('hide');
+              arrInactive.splice(0, arrInactive.length);
+              arrStatus.splice(0, arrStatus.length);
+              shuffledColors = generateGameColors(numUniqueCards);
+              createDivsForColors(shuffledColors);
+            },1000);
           }
       }
       else{ // not match, stay up for 1 sec
@@ -224,6 +228,7 @@ function handleReplayClick(){
   score.innerText= "0";
 }
 replay.addEventListener('click', handleReplayClick);
+
 
 // change on SELECT- numCards
 function handleChangeNumcards(event){
