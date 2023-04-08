@@ -53,6 +53,7 @@ label{
 }
 h3{
   color:#b1afba;
+  padding: 30px;
 }
 .head{
   font-weight: bold;
@@ -71,5 +72,19 @@ p{
 hr.line{
   border:1px solid rgb(77, 74, 74);
 }
-
+.score{
+  font-size:1.5em;
+  padding: 3px;
+  color:#d76b19
+}
+.best-score{
+  font-size:1.2em;
+  padding: 3px;
+  color:#8bd719
+}
+#score-board{
+  display:flex;
+  justify-self:auto;
+  align-items:center;
+}
 

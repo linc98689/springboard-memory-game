@@ -8,6 +8,9 @@ const arrInactive = []; // hold indices of inactive matched cards
 const unmatchStayTime = 1000;
 let numClick = 0;
 let numUniqueCards = 5;
+let bestScores = JSON.parse(localStorage.getItem("bestScores"));
+if (bestScores === null)
+  bestScores = {};
 
 //DOM
 const gameContainer = document.getElementById("game");
@@ -147,24 +150,25 @@ function handleCardClick(event) {
           if(arrInactive.length === arrStatus.length){
             flipUp(target);
             //save score
-            let bestScores = JSON.parse(localStorage.getItem("bestScores"));
-            if (bestScores === null){
-              bestScores = {};
-              bestScores[numCards.value] = numClick;
+            bestScores = JSON.parse(localStorage.getItem('bestScores'));
+            if(bestScores === null){
+              bestScores ={};
+              bestScores[numUniqueCards*2] = numClick;
               localStorage.setItem('bestScores', JSON.stringify(bestScores));
               bscore.innerText = numClick;
             }
-            else if( bestScores[numCards.value] === undefined){
-              bestScores[numCards.value] = numClick;
+            else if( bestScores[numUniqueCards*2] === undefined){
+              bestScores[numUniqueCards*2] = numClick;
               localStorage.setItem('bestScores', JSON.stringify(bestScores));
               bscore.innerText = numClick;
-            }else if(  bestScores[numCards] > numClick){
-              bestScores[numCards.value] = numClick;
+            }
+            else if(bestScores[numUniqueCards*2]>numClick){
+              bestScores[numUniqueCards*2] = numClick;
               localStorage.setItem('bestScores', JSON.stringify(bestScores));
               bscore.innerText = numClick;
             }
             else{
-              bscore.innerText = bestScores[numCards.value];
+              bscore.innerText = bestScores[numUniqueCards*2];
             }
             
             setTimeout(function(){
@@ -246,6 +250,12 @@ function handleChangeNumcards(event){
   } 
   arrStatus.splice(0)
   numUniqueCards = Number(numCards.value)/2;
+  if(bestScores[numCards.value]=== undefined){
+    bscore.innerText = "No Record";
+  }
+  else{
+    bscore.innerText = bestScores[numCards.value];
+  }
   shuffledColors = generateGameColors(numUniqueCards);
   createDivsForColors(shuffledColors);
 }
