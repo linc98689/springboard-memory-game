@@ -147,17 +147,24 @@ function handleCardClick(event) {
           if(arrInactive.length === arrStatus.length){
             flipUp(target);
             //save score
-            let bestScore = localStorage.getItem("bestScore");
-            if (bestScore === null){
+            let bestScores = JSON.parse(localStorage.getItem("bestScores"));
+            if (bestScores === null){
+              bestScores = {};
+              bestScores[numCards.value] = numClick;
+              localStorage.setItem('bestScores', JSON.stringify(bestScores));
               bscore.innerText = numClick;
-              localStorage.setItem('bestScore', numClick);
             }
-            else if( bestScore > numClick){
+            else if( bestScores[numCards.value] === undefined){
+              bestScores[numCards.value] = numClick;
+              localStorage.setItem('bestScores', JSON.stringify(bestScores));
               bscore.innerText = numClick;
-              localStorage.setItem('bestScore', numClick);
+            }else if(  bestScores[numCards] > numClick){
+              bestScores[numCards.value] = numClick;
+              localStorage.setItem('bestScores', JSON.stringify(bestScores));
+              bscore.innerText = numClick;
             }
             else{
-              bscore.innerText = bestScore;
+              bscore.innerText = bestScores[numCards.value];
             }
             
             setTimeout(function(){
