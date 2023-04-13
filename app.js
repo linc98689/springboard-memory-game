@@ -108,9 +108,6 @@ function createDivsForColors(colorArray) {
     newDiv.dataset.index = count;
     arrStatus.push(0);
     flipDown(newDiv);
-
-    // call a function handleCardClick when a div is clicked on
-    // newDiv.addEventListener("click", handleCardClick);
   
     // append the div to the element with an id of game
     gameContainer.append(newDiv);
@@ -118,10 +115,11 @@ function createDivsForColors(colorArray) {
   }
 }
 
+/********************    DOM Events  ******************/
 // when the DOM loads
 createDivsForColors(shuffledColors);
 
-// TODO: Implement this function!
+// cards
 function handleCardClick(event) {
   // you can use event.target to see which element was clicked
   let target = event.target;
@@ -143,9 +141,18 @@ function handleCardClick(event) {
           arrActiveUP.splice(0,1);
           arrStatus.splice(upone, 1, 2);
           arrStatus.splice(index, 1, 2);
+          target.style.outline = 'none';
           target.removeEventListener("click", handleCardClick);
-          alsoUpElement.removeEventListener("click", handleCardClick);
+          target.removeEventListener('mouseover', mouseOver);
+          target.removeEventListener('mouseout', mouseLeave);
+          target.removeEventListener('mousedown', outlineOn);
+          target.removeEventListener('mouseup', outlineOff);
 
+          alsoUpElement.removeEventListener("click", handleCardClick);
+          alsoUpElement.removeEventListener('mouseover', mouseOver);
+          alsoUpElement.removeEventListener('mouseout', mouseLeave);
+          alsoUpElement.removeEventListener('mousedown', outlineOn);
+          alsoUpElement.removeEventListener('mouseup', outlineOff);
           // check if game is over
           if(arrInactive.length === arrStatus.length){
             flipUp(target);
@@ -218,6 +225,10 @@ function handleStartClick(){
   const cards = document.querySelectorAll("#game div");
   for(let card of cards){
     card.addEventListener('click', handleCardClick);
+    card.addEventListener('mouseover', mouseOver);
+    card.addEventListener('mouseout', mouseLeave);
+    card.addEventListener('mousedown', outlineOn);
+    card.addEventListener('mouseup', outlineOff);
   }
   start.removeEventListener('click',handleStartClick);
   start.classList.add('hide');
@@ -228,11 +239,56 @@ function handleStartClick(){
 }
 start.addEventListener('click', handleStartClick);
 
+// START/REPLAY button down
+function outlineOn(event){
+  let btn = event.target;
+  btn.classList.add("outline");
+}
+start.addEventListener('mousedown', outlineOn);
+replay.addEventListener('mousedown', outlineOn);
+
+// START/REPLAY button up or drag
+function outlineOff(event){
+  let btn = event.target;
+  btn.classList.remove("outline");
+}
+start.addEventListener("mouseup", outlineOff);
+replay.addEventListener("mouseup", outlineOff);
+
+function mouseDrag(e){
+  if(e.buttons == 1) {
+    e.preventDefault();
+    e.target.classList.remove("outline");
+   }
+}
+
+function mouseOver(e){
+  let target = e.target;
+  // target.style.boxShadow="0 0 5px 5px #8bd719";
+  // target.style.outline="3px outlet  #8bd719";
+  target.style.outline="3px inset white";
+  console.log("triggered mouseover");
+}
+
+function mouseLeave(e){
+  let target = e.target;
+  // target.style.boxShadow="none";
+  target.style.outline = 'none';
+  console.log("triggered mouseout");
+}
+
+start.addEventListener("mousemove", mouseDrag);
+replay.addEventListener("mousemove", mouseDrag);
+
 // click on PLAY AGAIN
 function handleReplayClick(){
   const cards = document.querySelectorAll("#game div");
   for(let card of cards){
     card.addEventListener('click', handleCardClick);
+    card.addEventListener('mouseover', mouseOver);
+    card.addEventListener('mouseout', mouseLeave);
+    card.addEventListener('mousedown', outlineOn);
+    card.addEventListener('mouseup', outlineOff);
   }
   replay.classList.add('hide');
   numCards.classList.add('hide');

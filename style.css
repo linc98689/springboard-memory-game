@@ -1,4 +1,6 @@
+
 body{
+  box-sizing: border-box;
   margin:30px;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color:#163d33;
@@ -43,7 +45,7 @@ label{
 .button{
   font-size: 20px;
   padding: 18px 22px;
-  box-shadow:1px 1px 3px rgb(171, 169, 169);
+  box-shadow:0px 0px 3px rgb(171, 169, 169);
   border-radius: 10px; 
   background-color: #1d7460;
   color:rgb(195, 208, 220);
@@ -87,4 +89,14 @@ hr.line{
   justify-self:auto;
   align-items:center;
 }
+#start:hover, #replay:hover{
+  background-color: rgb(13, 66, 126);
+}
+.outline{
+  outline:2px solid rgb(71, 118, 220);
+  outline-offset: 3px;
+}
 
+.card-focus{
+  box-sizing: 0 0 5px 5px red;
+}
